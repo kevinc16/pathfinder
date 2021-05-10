@@ -1,0 +1,107 @@
+// @import "./constants.scss";
+$cellSize: 25px;
+
+#board {
+  // width: 50%;
+  // height: 50%;
+  // padding-left: 0;
+  // padding-right: 0;
+  // margin-left: auto;
+  // margin-right: auto;
+  display: block;
+}
+
+.board {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+
+  border-collapse: collapse;
+}
+
+.grid-container {
+  margin: 10px;
+}
+
+.grid-item {
+  border: 1px solid lightskyblue;
+  height: $cellSize;
+  width: $cellSize;
+  box-sizing: border-box;
+
+  $visitedColor: #36e0d5;
+  $pathColor: yellow;
+
+  @keyframes visitingAnim {
+    0% {
+      transform: scale(0.3);
+      background-color: white;
+      border-radius: 100%;
+    }
+    100% {
+      background-color: $visitedColor;
+    }
+  }
+
+  &.visited {
+    background-color: $visitedColor;
+    animation-name: visitingAnim;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes wallAnim {
+    0% {
+      transform: scale(0.3);
+    }
+
+    100% {
+      background-color: black;
+      border: none;
+    }
+  }
+
+  &.start {
+    background-color: red;
+  }
+
+  &.end {
+    background-color: blue;
+  }
+
+  @keyframes pathAnim {
+    0% {
+      transform: scale(0.6);
+    }
+    100% {
+      background-color: $pathColor;
+    }
+  }
+
+  &.path {
+    background-color: $pathColor;
+    animation-name: pathAnim;
+    animation-duration: 0.5s;
+  }
+
+  &.wall {
+    animation-name: wallAnim;
+    animation-duration: 0.3s;
+    background-color: black;
+    border: none;
+  }
+}
+
+#start-button {
+  color: white !important;
+  background-color: green;
+  border-radius: 10px;
+  margin: 0 1em 0 1em;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.disabled {
+  color: gainsboro !important;
+}
