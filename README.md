@@ -1,6 +1,6 @@
 # Pathfinding Visualizer
 
-A (relatively) simple pathfinding visualizer built with js. Implemented:
+A (relatively) simple pathfinding visualizer built with js to learn more about the pathfinding algorithms. Implemented:
 - DFS
 - BFS
 - Dijkstra's algorithm
