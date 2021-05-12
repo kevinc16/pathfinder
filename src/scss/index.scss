@@ -1,24 +1,28 @@
 // @import "./constants.scss";
-$cellSize: 25px;
+$cellSize: 30px;
 
-#board {
-  // width: 50%;
-  // height: 50%;
-  // padding-left: 0;
-  // padding-right: 0;
-  // margin-left: auto;
-  // margin-right: auto;
-  display: block;
+body {
+  height: 100vh;
+  background-repeat: no-repeat !important; 
+  background-attachment: fixed;
+  background: linear-gradient(
+    aliceblue 0%,
+    aliceblue 60%,
+    rgba(255, 255, 255, 1) 100%
+  ) !important;
 }
 
-.board {
+#board {
+  background-color: white;
+  z-index: -1;
+
   padding-left: 0;
   padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  position: absolute;
 
   border-collapse: collapse;
+
+  margin: auto;
+  margin-top: 10px;
 }
 
 .grid-container {
@@ -45,12 +49,6 @@ $cellSize: 25px;
     }
   }
 
-  &.visited {
-    background-color: $visitedColor;
-    animation-name: visitingAnim;
-    animation-duration: 0.5s;
-  }
-
   @keyframes wallAnim {
     0% {
       transform: scale(0.3);
@@ -62,14 +60,6 @@ $cellSize: 25px;
     }
   }
 
-  &.start {
-    background-color: red;
-  }
-
-  &.end {
-    background-color: blue;
-  }
-
   @keyframes pathAnim {
     0% {
       transform: scale(0.6);
@@ -77,6 +67,12 @@ $cellSize: 25px;
     100% {
       background-color: $pathColor;
     }
+  }
+
+  &.visited {
+    background-color: $visitedColor;
+    animation-name: visitingAnim;
+    animation-duration: 0.5s;
   }
 
   &.path {
@@ -90,6 +86,14 @@ $cellSize: 25px;
     animation-duration: 0.3s;
     background-color: black;
     border: none;
+  }
+
+  &.start {
+    background-color: red;
+  }
+
+  &.end {
+    background-color: blue;
   }
 }
 

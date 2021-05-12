@@ -3,7 +3,7 @@ import { sleep, checkAndAddNode, getCoords, drawShortestPath } from "../utils";
 async function bfs(startNode, x, y) {
   let newNode = startNode;
   let queue = [newNode];
-  let parent = new Map();
+  let parent = new Map(); // keep track of path
 
   while (!newNode.classList.contains("end") && queue.length !== 0) {
     if (!newNode.isEqualNode(startNode)) newNode.classList.add("visited");

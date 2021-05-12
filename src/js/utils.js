@@ -1,8 +1,11 @@
 import { rowCount, colCount } from "./constants";
 import dfs from "./algorithms/dfs";
 import bfs from "./algorithms/bfs";
+import dijkstra from "./algorithms/dijkstra";
+import astar from "./algorithms/astar";
 
 let algo = null;
+let started = false;
 
 function clearGrid() {
   for (let y = 0; y < rowCount; y++) {
@@ -29,19 +32,11 @@ function clearWalls() {
 }
 
 function endSearch() {
-  let startNode = getStartNode();
-  startNode.classList.remove("visited");
+  started = false;
 }
 
 export function hasStarted() {
-  let startNode = Array.from(
-    document.getElementsByClassName("grid-item start")
-  )[0];
-  if (startNode.classList.contains("visited")) {
-    return true;
-  } else {
-    return false;
-  }
+  return started;
 }
 
 export function disableButtons() {
@@ -95,6 +90,7 @@ export function initializeButtons() {
   let startButton = document.getElementById("start-button");
   startButton.onclick = async () => {
     let startNode = getStartNode();
+    started = true;
 
     let x, y;
     [x, y] = getCoords(startNode);
@@ -105,6 +101,10 @@ export function initializeButtons() {
       await bfs(startNode, x, y);
     } else if (algo === "dfs") {
       await dfs(startNode, x, y);
+    } else if (algo === "dijkstras") {
+      await dijkstra(startNode, x, y);
+    } else if (algo === "astar") {
+      await astar(startNode, x, y);
     } else {
       alert("Choose an algorithm to start");
     }
@@ -116,17 +116,23 @@ export function initializeButtons() {
   clearWallBtn.onclick = clearWalls;
 }
 
-export function cellBlocked(x, y) {
+export function isInBounds(x, y) {
   let bounded = false;
   if (y >= 0 && y < rowCount && x < colCount && x >= 0) {
     bounded = true;
   }
+  return bounded;
+}
 
-  let node = document.getElementById(`${x}-${y}`);
+export function cellBlocked(x, y) {
+  let bounded = isInBounds(x, y);
+
+  let node = getNode(x, y);
   if (
     !bounded ||
     node.classList.contains("visited") ||
-    node.classList.contains("wall")
+    node.classList.contains("wall") ||
+    node.classList.contains("start")
   ) {
     return null;
   } else {
@@ -134,15 +140,26 @@ export function cellBlocked(x, y) {
   }
 }
 
-export function checkAndAddNode(x, y, arr, parent = null, oldNode = null) {
+export function checkAndAddNode(
+  x,
+  y,
+  arr,
+  parent = null,
+  oldNode = null,
+  noDuplicate = true
+) {
   let tempNode = cellBlocked(x, y);
   if (tempNode) {
-    if (arr.includes(tempNode)) {
+    if (noDuplicate && arr.includes(tempNode)) {
       return;
     }
     if (parent) parent.set(tempNode, oldNode);
     arr.push(tempNode);
   }
+}
+
+export function getNode(x, y) {
+  return document.getElementById(`${x}-${y}`);
 }
 
 export function getCoords(node) {
@@ -152,6 +169,7 @@ export function getCoords(node) {
 }
 
 export async function drawShortestPath(startNode, endNode, parent) {
+  if (!endNode.classList.contains("end")) return;
   let p = parent.get(endNode);
   while (p) {
     // backtracking

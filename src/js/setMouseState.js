@@ -39,8 +39,8 @@ let moveEnd = false;
 
 function addCellEvents(cell) {
   cell.onmousedown = () => {
-    if (cell.classList.contains("start")) moveStart = true;
-    else if (cell.classList.contains("end")) moveEnd = true;
+    if (cell.classList.contains("start") && !hasStarted()) moveStart = true;
+    else if (cell.classList.contains("end") && !hasStarted()) moveEnd = true;
   };
   cell.onmouseup = () => {
     if (cell.classList.contains("start")) moveStart = false;
