@@ -14,6 +14,7 @@ function getDistance(oldNode, newNode) {
   return 1;
 }
 
+// heuristic function - just the absolute x + y distance from start to end
 function h(node) {
   let end = getEndNode();
   let [endX, endY] = getCoords(end);
@@ -21,6 +22,9 @@ function h(node) {
   return Math.abs(x - endX) + Math.abs(y - endY); // manhattan distance
 }
 
+
+// A* 'knows' in advance where the node is - but expands when there are things in the way
+// A* == dijkstra if h(node) is 0
 export async function astar(startNode, x, y) {
   let newNode = startNode;
   let knownNodes = new PriorityQueue();
@@ -57,7 +61,7 @@ export async function astar(startNode, x, y) {
 
   while (!newNode.classList.contains("end") && !knownNodes.isEmpty()) {
     await sleep(10);
-    newNode = knownNodes.dequeue().element;
+    newNode = knownNodes.dequeue().element; // takes the lowest guess
     if (!newNode.isEqualNode(startNode) && !newNode.classList.contains("end"))
       newNode.classList.add("visited");
     [x, y] = getCoords(newNode);

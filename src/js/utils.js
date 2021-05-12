@@ -4,8 +4,8 @@ import bfs from "./algorithms/bfs";
 import dijkstra from "./algorithms/dijkstra";
 import astar from "./algorithms/astar";
 
-let algo = null;
-let started = false;
+let algo = null; // type of algo selected
+let started = false; // if anim has started
 
 function clearGrid() {
   for (let y = 0; y < rowCount; y++) {
@@ -29,10 +29,6 @@ function clearWalls() {
       if (element.classList.contains("wall")) element.className = "grid-item";
     });
   }
-}
-
-function endSearch() {
-  started = false;
 }
 
 export function hasStarted() {
@@ -109,13 +105,15 @@ export function initializeButtons() {
       alert("Choose an algorithm to start");
     }
     enableButtons();
-    endSearch();
+    started = false;
   };
 
   let clearWallBtn = document.getElementById("clearwall-button");
   clearWallBtn.onclick = clearWalls;
 }
 
+
+// various functions for checking
 export function isInBounds(x, y) {
   let bounded = false;
   if (y >= 0 && y < rowCount && x < colCount && x >= 0) {
@@ -140,6 +138,8 @@ export function cellBlocked(x, y) {
   }
 }
 
+// for dfs and bfs - saving the path taken
+// for dfs we may encounter duplicate nodes to start from again, where noDuplicate=false
 export function checkAndAddNode(
   x,
   y,
@@ -158,6 +158,7 @@ export function checkAndAddNode(
   }
 }
 
+// more util functions
 export function getNode(x, y) {
   return document.getElementById(`${x}-${y}`);
 }

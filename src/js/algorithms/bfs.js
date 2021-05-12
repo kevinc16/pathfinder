@@ -12,6 +12,7 @@ async function bfs(startNode, x, y) {
     newNode = queue.shift();
     [x, y] = getCoords(newNode);
 
+    // check all neighbors
     checkAndAddNode(x, y - 1, queue, parent, newNode);
     checkAndAddNode(x + 1, y, queue, parent, newNode);
     checkAndAddNode(x, y + 1, queue, parent, newNode);

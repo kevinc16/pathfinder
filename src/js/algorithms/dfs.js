@@ -15,6 +15,7 @@ async function dfs(startNode, x, y) {
 
     [x, y] = getCoords(newNode);
 
+    // left -> down -> right -> up - stack pops in that order
     checkAndAddNode(x, y - 1, stack, parent, newNode, false);
     checkAndAddNode(x + 1, y, stack, parent, newNode, false);
     checkAndAddNode(x, y + 1, stack, parent, newNode, false);

@@ -4,6 +4,7 @@ import { hasStarted, getStartNode, getEndNode } from "./utils";
 let leftMouseButtonDown = false;
 let rightMouseButtonDown = false;
 
+// for checking mouse state
 function setButtonState(e) {
   e.preventDefault();
   leftMouseButtonDown =
@@ -37,6 +38,7 @@ function removeWall(event) {
 let moveStart = false;
 let moveEnd = false;
 
+// mouse events for drawing walls, removing walls, moving start & end
 function addCellEvents(cell) {
   cell.onmousedown = () => {
     if (cell.classList.contains("start") && !hasStarted()) moveStart = true;
@@ -71,6 +73,7 @@ function addCellEvents(cell) {
   };
 }
 
+// initializing
 function drawGrids() {
   for (let y = 0; y < rowCount; y++) {
     let row = document.createElement("tr");
