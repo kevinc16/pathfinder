@@ -1,4 +1,4 @@
-# pathfinder visualizer
+# Pathfinding Visualizer
 
 A (relatively) simple pathfinding visualizer built with js. Implemented:
 - DFS
